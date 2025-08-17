@@ -35,6 +35,13 @@ function createInputs(data) {
     container.appendChild(label);
     container.appendChild(input);
     inputField.appendChild(container);
+    
+    let cityName, cityId;
+    if (data.id === 'cityName') {
+      cityName = input;
+    } else if (data.id === 'cityId') {
+      cityId = input;
+    }
   });
   return inputField;
 }
@@ -115,3 +122,14 @@ buttonContainer.appendChild(cancelButton);
 
 form.appendChild(buttonContainer);
 document.body.appendChild(form);
+
+function toggleInputs(e) {
+  if (e.target === cityName) {
+    cityId.disabled = cityName.value.trim() !== '';
+  } else if (e.target === cityId) {
+    cityName.disabled = cityId.value.trim() !== '';
+  }
+}
+
+cityName.addEventListener('input', toggleInputs);
+cityId.addEventListener('input', toggleInputs);
