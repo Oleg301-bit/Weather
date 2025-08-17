@@ -3,12 +3,13 @@ import {
   items,
   radioInputsInform,
 } from './constants/index.js';
-const form = document.createElement('form');
-form.classList.add('form');
+
 const title = document.createElement('h1');
 title.classList.add('title');
 title.textContent = 'Weather map';
-form.appendChild(title);
+document.body.appendChild(title);
+const form = document.createElement('form');
+form.classList.add('form');
 
 const inputContainer = document.createElement('div');
 inputContainer.classList.add('input-container');
@@ -19,14 +20,21 @@ function createInputs(data) {
 
   data.forEach((data) => {
     const label = document.createElement('label');
+    label.classList.add('set-label');
     label.textContent = data.label;
 
     const input = document.createElement('input');
+    input.classList.add('set-input');
+
     input.type = data.type;
     input.id = data.id;
 
-    inputField.appendChild(label);
-    inputField.appendChild(input);
+    const container = document.createElement('div');
+    container.classList.add('container');
+
+    container.appendChild(label);
+    container.appendChild(input);
+    inputField.appendChild(container);
   });
   return inputField;
 }
@@ -38,18 +46,24 @@ radioInputs.classList.add('input-container');
 
 function createRadioInputs(data) {
   const inputRadioField = document.createElement('div');
-  inputRadioField.classList.add('input-field');
+  inputRadioField.classList.add('input-radio-field');
 
   data.forEach((data) => {
     const label = document.createElement('label');
+    label.classList.add('radio-label');
     label.textContent = data.label;
 
     const input = document.createElement('input');
     input.type = data.type;
     input.name = data.name;
 
-    inputRadioField.appendChild(label);
-    inputRadioField.appendChild(input);
+    const radioContainer = document.createElement('div');
+    radioContainer.classList.add('radio-container');
+
+    radioContainer.appendChild(label);
+    radioContainer.appendChild(input);
+
+    inputRadioField.appendChild(radioContainer);
   });
   return inputRadioField;
 }
@@ -67,16 +81,26 @@ function createTextValue() {
     const title = document.createElement('p');
     title.classList.add('set-title');
     title.textContent = item.title;
+
     const value = document.createElement('span');
     value.classList.add('set-value');
     value.textContent = item.value;
-    indicators.appendChild(title);
-    indicators.appendChild(value);
+
+    const outputContainer = document.createElement('div');
+    outputContainer.classList.add('output-container');
+
+    outputContainer.appendChild(title);
+    outputContainer.appendChild(value);
+
+    indicators.appendChild(outputContainer);
   });
   return indicators;
 }
 outputValue.appendChild(createTextValue(items));
 form.appendChild(outputValue);
+
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('button-container');
 
 const okButton = document.createElement('button');
 okButton.classList.add('set-button');
@@ -86,6 +110,8 @@ const cancelButton = document.createElement('button');
 cancelButton.classList.add('set-button');
 cancelButton.textContent = 'Cancel';
 
-form.appendChild(okButton);
-form.appendChild(cancelButton);
+buttonContainer.appendChild(okButton);
+buttonContainer.appendChild(cancelButton);
+
+form.appendChild(buttonContainer);
 document.body.appendChild(form);
