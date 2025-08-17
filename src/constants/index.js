@@ -1,6 +1,9 @@
 export const inputInformation = [
   { type: 'text', id: 'cityName', label: 'City name' },
   { type: 'text', id: 'cityId', label: 'City ID' },
+];
+
+export const radioInputsInform = [
   {
     type: 'radio',
     label: 'City name',
@@ -12,7 +15,6 @@ export const inputInformation = [
     name: 'option',
   },
 ];
-
 export const items = [
   { title: 'Temperature', value: '' },
   { title: 'Wind Speed', value: '' },
