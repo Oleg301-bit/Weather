@@ -35,7 +35,7 @@ function createInputs(data) {
     container.appendChild(label);
     container.appendChild(input);
     inputField.appendChild(container);
-    
+
     let cityName, cityId;
     if (data.id === 'cityName') {
       cityName = input;
@@ -133,3 +133,40 @@ function toggleInputs(e) {
 
 cityName.addEventListener('input', toggleInputs);
 cityId.addEventListener('input', toggleInputs);
+
+
+
+const apiKey = '8455cc7554e44eaa37df3bc75ce8e06c';
+
+async function getWeather(event) {
+  event.preventDefault();
+
+  const cityNameInput = document.getElementById('cityName').value.trim();
+  const cityIdInput = document.getElementById('cityId').value.trim();
+
+  let url = '';
+  if (cityNameInput) {
+    url = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameInput}&appid=${apiKey}&units=metric`;
+  } else {
+    url = `https://api.openweathermap.org/data/2.5/weather?q=${cityIdInput}&appid=${apiKey}&units=metric`;
+  }
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    const temperature = `${data.main.temp}°C`;
+    const windSpeed = `${data.wind.speed} м/с`;
+    const humidity = `${data.main.humidity}%`;
+
+    const values = document.querySelectorAll('.set-value');
+
+    if (values.length >= 3) {
+      values[0].textContent = temperature;
+      values[1].textContent = windSpeed;
+      values[2].textContent = humidity;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+okButton.addEventListener('click', getWeather);
