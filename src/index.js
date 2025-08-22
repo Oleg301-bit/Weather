@@ -125,16 +125,15 @@ document.body.appendChild(form);
 
 function toggleInputs(e) {
   if (e.target === cityName) {
-    cityId.disabled = cityName.value.trim() !== '';
+    cityId.disabled = true;
+    cityName.disabled = false;
   } else if (e.target === cityId) {
-    cityName.disabled = cityId.value.trim() !== '';
+    cityName.disabled = true;
+    cityId.disabled = false;
   }
 }
-
-cityName.addEventListener('input', toggleInputs);
-cityId.addEventListener('input', toggleInputs);
-
-
+cityName.addEventListener('focus', toggleInputs);
+cityId.addEventListener('focus', toggleInputs);
 
 const apiKey = '8455cc7554e44eaa37df3bc75ce8e06c';
 
@@ -147,8 +146,8 @@ async function getWeather(event) {
   let url = '';
   if (cityNameInput) {
     url = `https://api.openweathermap.org/data/2.5/weather?q=${cityNameInput}&appid=${apiKey}&units=metric`;
-  } else {
-    url = `https://api.openweathermap.org/data/2.5/weather?q=${cityIdInput}&appid=${apiKey}&units=metric`;
+  } else if (cityIdInput) {
+    url = `https://api.openweathermap.org/data/2.5/weather?id=${cityIdInput}&appid=${apiKey}&units=metric`;
   }
   try {
     const response = await fetch(url);
