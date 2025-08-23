@@ -63,6 +63,7 @@ function createRadioInputs(data) {
     const input = document.createElement('input');
     input.type = data.type;
     input.name = data.name;
+    input.value = data.value;
 
     const radioContainer = document.createElement('div');
     radioContainer.classList.add('radio-container');
@@ -123,18 +124,28 @@ buttonContainer.appendChild(cancelButton);
 form.appendChild(buttonContainer);
 document.body.appendChild(form);
 
-function toggleInputs(e) {
-  if (e.target === cityName) {
-    cityId.disabled = true;
-    cityName.disabled = false;
-  } else if (e.target === cityId) {
-    cityName.disabled = true;
-    cityId.disabled = false;
-  }
-}
-cityName.addEventListener('focus', toggleInputs);
-cityId.addEventListener('focus', toggleInputs);
+const cityNameInput = document.getElementById('cityName');
+const cityIdInput = document.getElementById('cityId');
+const radioButtons = document.querySelectorAll('input[type="radio"]');
 
+radioButtons.forEach((radio) => {
+  radio.addEventListener('change', () => {
+    if (radio.value === 'cityName') {
+      cityNameInput.disabled = false;
+      cityIdInput.disabled = true;
+      cityNameInput = '';
+    } else if (radio.value === 'cityId') {
+      cityIdInput.disabled = false;
+      cityNameInput.disabled = true;
+      cityIdInput = '';
+    }
+  });
+});
+if (radioButtons.length > 0) {
+  radioButtons[0].checked = true;
+  cityNameInput.disabled = false;
+  cityIdInput.disabled = true;
+}
 const apiKey = '8455cc7554e44eaa37df3bc75ce8e06c';
 
 async function getWeather(event) {

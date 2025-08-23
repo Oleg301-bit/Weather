@@ -8,11 +8,13 @@ export const radioInputsInform = [
     type: 'radio',
     label: 'City name',
     name: 'option',
+    value: 'cityName',
   },
   {
     type: 'radio',
     label: 'City ID',
     name: 'option',
+    value: 'cityId',
   },
 ];
 export const items = [
